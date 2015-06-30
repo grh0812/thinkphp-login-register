@@ -34,12 +34,16 @@ class LoginController extends Controller {
             // 组合查询条件
             $where = array();
             $where['username'] = $data['username'];
-            $result = $login->where($where)->field('userid,password')->find();
+            $result = $login->where($where)->field('userid,username,nickname,password,lastdate,lastip')->find();
 
             // 验证用户名 对比 密码
             if ($result && $result['password'] == $result['password']) {
                 // 存储session
-                session('uid', $result['userid']);
+                session('uid', $result['userid']);          // 当前用户id
+                session('nickname', $result['nickname']);   // 当前用户昵称
+                session('username', $result['username']);   // 当前用户名
+                session('lastdate', $result['lastdate']);   // 上一次登录时间
+                session('lastip', $result['lastip']);       // 上一次登录ip
 
                 // 更新用户登录信息
                 $where['userid'] = session('uid');
@@ -91,7 +95,9 @@ class LoginController extends Controller {
      */
     public function logout()
     {
-
+        // 清楚所有session
+        session(null);
+        redirect(U('Login/login'), 2, '正在退出登录...');
     }
 
     /**

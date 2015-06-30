@@ -16,7 +16,7 @@ use Think\Controller;
  */
 class CommonController extends Controller {
     /* 定义用户id */
-    public $userid = '';
+    public static $userid = '';
 
     /**
      * 自动执行
