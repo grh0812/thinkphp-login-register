@@ -37,7 +37,7 @@ class LoginController extends Controller {
             $result = $login->where($where)->field('userid,username,nickname,password,lastdate,lastip')->find();
 
             // 验证用户名 对比 密码
-            if ($result && $result['password'] == $result['password']) {
+            if ($result && $result['password'] == $data['password']) {
                 // 存储session
                 session('uid', $result['userid']);          // 当前用户id
                 session('nickname', $result['nickname']);   // 当前用户昵称
